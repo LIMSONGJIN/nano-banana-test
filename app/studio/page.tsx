@@ -2,7 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import VirtualTryOnModal from "../components/VirtualTryOnModal";
 import ProductSearchModal from "../components/ProductSearchModal";
 
@@ -42,8 +41,6 @@ const StudioPage: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const router = useRouter();
-
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			window.localStorage.removeItem("studio-vto-payload");
@@ -80,7 +77,9 @@ const StudioPage: React.FC = () => {
 								};
 							}
 						} else {
-							console.warn(`Thumbnail generation failed for ${item.name} (status: ${res.status}). Attempting fallback...`);
+							console.warn(
+								`Thumbnail generation failed for ${item.name} (status: ${res.status}). Attempting fallback...`
+							);
 						}
 					} catch (err) {
 						console.error("Thumbnail generation error (image-based):", err);
@@ -284,8 +283,7 @@ const StudioPage: React.FC = () => {
 						<div
 							key={index}
 							onClick={() => handleItemClick(item)}
-							className="bg-neutral-900 rounded-2xl overflow-hidden flex cursor-pointer hover:bg-neutral-800 transition group border border-transparent hover:border-neutral-700"
-						>
+							className="bg-neutral-900 rounded-2xl overflow-hidden flex cursor-pointer hover:bg-neutral-800 transition group border border-transparent hover:border-neutral-700">
 							<div className="w-32 h-40 shrink-0 overflow-hidden flex items-center justify-center bg-neutral-900 relative">
 								{item.thumbnailImage || item.croppedImage ? (
 									<img
@@ -299,7 +297,9 @@ const StudioPage: React.FC = () => {
 									</div>
 								)}
 								<div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-									<span className="text-xs font-bold text-white bg-black/50 px-2 py-1 rounded-full border border-white/20">Find Similar</span>
+									<span className="text-xs font-bold text-white bg-black/50 px-2 py-1 rounded-full border border-white/20">
+										Find Similar
+									</span>
 								</div>
 							</div>
 							<div className="flex-1 p-3 flex flex-col justify-between">
@@ -335,11 +335,7 @@ const StudioPage: React.FC = () => {
 				)}
 			</div>
 
-			<VirtualTryOnModal
-				isOpen={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
-				payload={vtoPayload}
-			/>
+			<VirtualTryOnModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} payload={vtoPayload} />
 
 			<ProductSearchModal
 				isOpen={isSearchModalOpen}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, Part } from "@google/generative-ai";
 
 const apiKey = process.env.GEMINI_API_KEY || "";
 
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		let prompt = "";
-		let inlineDataParts: any[] = [];
+		let inlineDataParts: Part[] = [];
 
 		if (dataUrl) {
 			// IMAGE-TO-IMAGE GENERATION
@@ -153,10 +153,7 @@ Return a single high-quality product thumbnail image of the described item.`;
 			contents: [
 				{
 					role: "user",
-					parts: [
-						...inlineDataParts,
-						{ text: prompt },
-					],
+					parts: [...inlineDataParts, { text: prompt }],
 				},
 			],
 		});
